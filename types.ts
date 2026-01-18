@@ -13,11 +13,11 @@ export enum ComfortClass {
 }
 
 export const COMFORT_COLORS: Record<ComfortClass, string> = {
-  [ComfortClass.A]: '#4ade80', // green-400
-  [ComfortClass.B]: '#a3e635', // lime-400
-  [ComfortClass.C]: '#facc15', // yellow-400
-  [ComfortClass.D]: '#fb923c', // orange-400
-  [ComfortClass.E]: '#f87171'  // red-400
+  [ComfortClass.A]: '#3b82f6', // blue-500
+  [ComfortClass.B]: '#22d3ee', // cyan-400
+  [ComfortClass.C]: '#4ade80', // green-400
+  [ComfortClass.D]: '#facc15', // yellow-400
+  [ComfortClass.E]: '#ef4444'  // red-500
 };
 
 export const WIND_COLORS = {
