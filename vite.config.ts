@@ -19,6 +19,6 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, '.'),
       }
     },
-    base: '/wind-comfort-research/', // Update this if your repo name is different
+    base: '/wind_comfort_research/', // Matches repository name
   };
 });
