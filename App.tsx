@@ -51,7 +51,7 @@ const ThreeDViewer: React.FC = () => {
 
     // Load User Model
     const loader = new GLTFLoader();
-    loader.load('/Garanti.glb', (gltf) => {
+    loader.load(`${import.meta.env.BASE_URL}Garanti.glb`, (gltf) => {
       const model = gltf.scene;
       model.scale.set(0.05, 0.05, 0.05);
 
