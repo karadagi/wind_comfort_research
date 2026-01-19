@@ -22,6 +22,8 @@ const SCENES = [
   { id: 'design3', title: 'Design Validation', duration: 1 },
   { id: 'final', title: 'Final Condition', duration: 1 },
   { id: 'comparison', title: 'Impact Analysis', duration: 1 },
+  { id: 'canopy_gallery', title: 'Constructed Canopy', duration: 1 },
+  { id: 'paper', title: 'Research Paper', duration: 1 },
 ];
 
 const StepTrigger: React.FC<{ index: number; onInView: (index: number) => void }> = ({ index, onInView }) => {
@@ -267,7 +269,9 @@ const App: React.FC = () => {
     if (index === 12) return "07-03";
     if (index === 13) return "08-01";
     if (index === 14) return "08-02";
-    if (index >= 15) return `0${index - 6}`;
+    if (index === 15) return "09";
+    if (index === 16) return "10";
+    if (index >= 17) return `0${index - 7}`;
     return `0${index}`;
   };
 
@@ -294,6 +298,8 @@ const App: React.FC = () => {
               {activeSceneIndex === 12 && <SceneDesignValidation key="12" />}
               {activeSceneIndex === 13 && <SceneResults key="13" isImproved={true} />}
               {activeSceneIndex === 14 && <SceneComparison key="14" />}
+              {activeSceneIndex === 15 && <SceneCanopyGallery key="15" />}
+              {activeSceneIndex === 16 && <ScenePaperViewer key="16" />}
             </AnimatePresence>
 
             {/* Comfort Legend - Only for steps 05-02(7) and 08-02(14) */}
@@ -389,7 +395,11 @@ const SceneDescription: React.FC<{ index: number }> = ({ index }) => {
     "The proposed canopy design integrates with the existing architecture. It provides necessary shelter while maintaining the visual connection to the surrounding towers.",
     "Dynamic simulation confirms the effectiveness of the intervention. The video demonstrates how the proposed structure disrupts the vortex formation.",
     "Validation: The final simulation shows a dramatic reduction in wind velocity. Class E areas are reclaimed, ensuring a safe, comfortable public realm.",
-    "Compare the original vs. improved condition. Use the slider to reveal how the baffle system drastically reduces the critical turbulence zones."
+    "Compare the original vs. improved condition. Use the slider to reveal how the baffle system drastically reduces the critical turbulence zones.",
+    // 09 (Index 15)
+    "The realized canopy structure. These photographs document the final constructed form, showcasing the integration of the aerodynamic baffles with the architectural context.",
+    // 10 (Index 16)
+    "The full research findings and methodology are documented in this paper. You can review the detailed CFD validation and design process here."
   ];
   return <p>{descriptions[index]}</p>;
 };
@@ -797,6 +807,119 @@ const ComfortLegend: React.FC = () => (
     </div>
     <div className="mt-2 pt-2 border-t border-slate-100 text-[9px] font-bold text-slate-400 uppercase tracking-wider text-center">
       NEN 8100
+    </div>
+  </motion.div>
+);
+
+const SceneCanopyGallery: React.FC = () => {
+  const images = [
+    "20191112_105504.jpg",
+    "20191112_105553.jpg",
+    "20191112_113529.jpg",
+    "20191112_113913.jpg",
+    "20191112_115529.jpg",
+    "20191112_115858.jpg",
+    "20191112_120010.jpg",
+    "20191112_120129.jpg",
+    "20191112_120134.jpg"
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Auto-advance
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      className="w-full max-w-4xl h-[70vh] flex flex-col gap-4"
+    >
+      {/* Main Viewer */}
+      <div className="flex-1 relative bg-slate-100 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={activeIndex}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7 }}
+            src={`${import.meta.env.BASE_URL}Gallery/${images[activeIndex]}`}
+            alt={`Canopy Construction ${activeIndex + 1}`}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+
+        {/* Overlay Info */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 pt-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <p className="text-white text-sm font-medium">Construction Progress • Image {activeIndex + 1} of {images.length}</p>
+        </div>
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={(e) => { e.stopPropagation(); setActiveIndex((prev) => (prev - 1 + images.length) % images.length); }}
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md p-2 rounded-full text-white transition-all opacity-0 group-hover:opacity-100"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+        </button>
+        <button
+          onClick={(e) => { e.stopPropagation(); setActiveIndex((prev) => (prev + 1) % images.length); }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md p-2 rounded-full text-white transition-all opacity-0 group-hover:opacity-100"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+        </button>
+      </div>
+
+      {/* Thumbnails */}
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+      <div className="h-20 w-full overflow-x-auto flex gap-3 p-1 pb-2 snap-x hide-scrollbar">
+        {images.map((img, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveIndex(idx)}
+            className={`flex-shrink-0 h-full aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all snap-center ${activeIndex === idx ? 'border-blue-500 scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'
+              }`}
+          >
+            <img
+              src={`${import.meta.env.BASE_URL}Gallery/${img}`}
+              alt={`Thumbnail ${idx}`}
+              className="w-full h-full object-cover"
+            />
+          </button>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
+const ScenePaperViewer: React.FC = () => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 0.95 }}
+    className="w-full h-[80vh] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative"
+  >
+    <iframe
+      src={`${import.meta.env.BASE_URL}paper/Design for improving pedestrian wind comfort a case study on a courtyard around a tall building.pdf`}
+      className="w-full h-full"
+      title="Research Paper"
+    />
+    <div className="absolute bottom-4 right-4 bg-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg pointer-events-none">
+      PDF PREVIEW
     </div>
   </motion.div>
 );
