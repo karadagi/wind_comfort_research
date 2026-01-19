@@ -834,7 +834,7 @@ const SceneCanopyGallery: React.FC = () => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="w-full max-w-4xl h-[70vh] flex flex-col gap-4"
+      className="w-full max-w-2xl h-[40vh] flex flex-col gap-4"
     >
       {/* Main Viewer */}
       <div className="flex-1 relative bg-slate-100 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group">
