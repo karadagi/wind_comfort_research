@@ -847,7 +847,7 @@ const SceneCanopyGallery: React.FC = () => {
             transition={{ duration: 0.7 }}
             src={`${import.meta.env.BASE_URL}Gallery/${images[activeIndex]}`}
             alt={`Canopy Construction ${activeIndex + 1}`}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out"
           />
         </AnimatePresence>
 
@@ -869,33 +869,6 @@ const SceneCanopyGallery: React.FC = () => {
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
         </button>
-      </div>
-
-      {/* Thumbnails */}
-      <style>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-      <div className="h-20 w-full overflow-x-auto flex gap-3 p-1 pb-2 snap-x hide-scrollbar">
-        {images.map((img, idx) => (
-          <button
-            key={idx}
-            onClick={() => setActiveIndex(idx)}
-            className={`flex-shrink-0 h-full aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all snap-center ${activeIndex === idx ? 'border-blue-500 scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'
-              }`}
-          >
-            <img
-              src={`${import.meta.env.BASE_URL}Gallery/${img}`}
-              alt={`Thumbnail ${idx}`}
-              className="w-full h-full object-cover"
-            />
-          </button>
-        ))}
       </div>
     </motion.div>
   );
