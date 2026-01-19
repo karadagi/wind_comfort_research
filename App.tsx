@@ -813,15 +813,10 @@ const ComfortLegend: React.FC = () => (
 
 const SceneCanopyGallery: React.FC = () => {
   const images = [
-    "20191112_105504.jpg",
-    "20191112_105553.jpg",
-    "20191112_113529.jpg",
-    "20191112_113913.jpg",
-    "20191112_115529.jpg",
-    "20191112_115858.jpg",
-    "20191112_120010.jpg",
-    "20191112_120129.jpg",
-    "20191112_120134.jpg"
+    "1.jpg",
+    "2.jpg",
+    "3.jpg",
+    "4.jpg"
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
